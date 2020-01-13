@@ -1,0 +1,14 @@
+
+#!/bin/bash
+
+# This script pauses BOINC tasks, if CPU temerature reaches user-defined threshold
+
+THRESHOLD=$1
+PKGTEMP=`sensors -u | grep temp1_input | grep -o -E '[[:digit:]]+'`
+arr=($PKGTEMP)
+TEMP=${arr[1]}
+if [ $TEMP -ge $THRESHOLD ]
+then
+    boinccmd --set_run_mode never 300
+fi
+
